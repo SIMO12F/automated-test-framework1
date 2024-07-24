@@ -1,41 +1,49 @@
 import pytest
 import os
+import sys
 from datetime import datetime
 from src.config import Config
 from src.logger import logger
 
+def setup_environment():
+    """Set up the test environment."""
+    # Ensure necessary directories exist
+    os.makedirs(Config.SCREENSHOT_DIR, exist_ok=True)
+    os.makedirs(Config.REPORT_DIR, exist_ok=True)
+    os.makedirs(Config.get_log_dir(), exist_ok=True)
 
-def main():
-    logger.info("Starting test execution")
-
+def get_pytest_args():
+    """Generate pytest arguments."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_dir = Config.get_report_dir()
-    if not os.path.exists(report_dir):
-        os.makedirs(report_dir)
-    report_file = os.path.join(report_dir, f"test_report_{timestamp}.html")
+    report_file = os.path.join(Config.REPORT_DIR, f"test_report_{timestamp}.html")
 
-    pytest_args = [
+    args = [
         "-v",
         f"--html={report_file}",
         "--self-contained-html",
+        "--capture=tee-sys",
+        f"--log-file={Config.LOG_FILE}",
+        f"--log-file-level={Config.LOG_LEVEL}",
         "src/tests"
     ]
 
     if Config.PARALLEL_EXECUTION:
-        pytest_args.extend(["-n", "auto"])
+        args.extend(["-n", "auto"])
 
-    if Config.RUN_UI_TESTS:
-        pytest_args.append("src/tests/test_search.py")
-        pytest_args.append("src/tests/test_example.py")
+    return args
 
-    if Config.RUN_API_TESTS:
-        pytest_args.append("src/tests/test_api.py")
-
-    logger.info(f"Running tests with arguments: {pytest_args}")
+def main():
+    logger.info("Starting test execution")
+    logger.info(f"Running tests in {Config.ENVIRONMENT} environment")
     logger.info(f"Browser: {Config.BROWSER}")
     logger.info(f"Headless mode: {'Enabled' if Config.HEADLESS else 'Disabled'}")
     logger.info(f"Base URL: {Config.get_base_url()}")
-    logger.info(f"API Base URL: {Config.API_BASE_URL}")
+    logger.info(f"API Base URL: {Config.get_api_base_url()}")
+
+    setup_environment()
+
+    pytest_args = get_pytest_args()
+    logger.info(f"Running tests with arguments: {pytest_args}")
 
     exit_code = pytest.main(pytest_args)
 
@@ -54,10 +62,9 @@ def main():
     elif exit_code == 5:
         logger.error("No tests were collected")
 
-    logger.info(f"Test report generated at: {report_file}")
+    logger.info(f"Test report generated at: {os.path.join(Config.REPORT_DIR, 'test_report_*.html')}")
 
     return exit_code
 
-
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

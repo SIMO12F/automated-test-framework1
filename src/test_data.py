@@ -7,20 +7,14 @@ class TestData:
     @staticmethod
     def get_search_data():
         data = []
+        csv_file = os.path.join(Config.PROJECT_ROOT, 'src', 'test_data', 'search_data.csv')
         try:
-            with open(Config.TEST_DATA_FILE, 'r') as f:
+            with open(csv_file, 'r') as f:
                 reader = csv.DictReader(f)
                 for row in reader:
                     data.append(row)
-            if not data:
-                logger.warning(f"No data found in {Config.TEST_DATA_FILE}")
-            else:
-                logger.info(f"Loaded {len(data)} rows from {Config.TEST_DATA_FILE}")
-                logger.debug(f"Data: {data}")
         except FileNotFoundError:
-            logger.error(f"Test data file not found at {Config.TEST_DATA_FILE}")
-        except Exception as e:
-            logger.error(f"Error reading test data file: {str(e)}")
+            print(f"Warning: Test data file not found at {csv_file}")
         return data
 
     # Static test data (kept as fallback)
