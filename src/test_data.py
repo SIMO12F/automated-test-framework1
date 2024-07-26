@@ -14,27 +14,14 @@ class TestData:
                 for row in reader:
                     data.append(row)
         except FileNotFoundError:
-            print(f"Warning: Test data file not found at {csv_file}")
+            logger.error(f"Test data file not found at {csv_file}")
         return data
 
     # Static test data (kept as fallback)
-    EXAMPLE_URL = "https://example.com"
     PYTHON_URL = "https://www.python.org"
     SEARCH_QUERY = "pycon"
     ALTERNATIVE_SEARCH_QUERY = "django"
-    EXAMPLE_TITLE = "Example Domain"
-    EXAMPLE_HEADING = "Example Domain"
-    EXAMPLE_PARAGRAPH_CONTENT = "for use in illustrative examples in documents"
     INVALID_SEARCH_QUERY = "xyzabcdefg"
-
-    @staticmethod
-    def get_example_data():
-        return {
-            "url": TestData.EXAMPLE_URL,
-            "title": TestData.EXAMPLE_TITLE,
-            "heading": TestData.EXAMPLE_HEADING,
-            "paragraph_content": TestData.EXAMPLE_PARAGRAPH_CONTENT
-        }
 
     @staticmethod
     def get_python_data():

@@ -18,30 +18,38 @@ def browser(request):
     browser_name = request.param
     logger.info(f"Setting up {browser_name} browser")
 
-    if browser_name == "chrome":
-        options = webdriver.ChromeOptions()
-        if Config.HEADLESS:
-            options.add_argument("--headless")
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
-    elif browser_name == "firefox":
-        options = webdriver.FirefoxOptions()
-        if Config.HEADLESS:
-            options.add_argument("--headless")
-        driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
-    elif browser_name == "edge":
-        options = webdriver.EdgeOptions()
-        if Config.HEADLESS:
-            options.add_argument("--headless")
-        driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()), options=options)
-    else:
-        raise ValueError(f"Unsupported browser: {browser_name}")
+    try:
+        if browser_name == "chrome":
+            service = ChromeService(ChromeDriverManager().install())
+            options = webdriver.ChromeOptions()
+            if Config.HEADLESS:
+                options.add_argument("--headless")
+            driver = webdriver.Chrome(service=service, options=options)
+        elif browser_name == "firefox":
+            service = FirefoxService(GeckoDriverManager().install())
+            options = webdriver.FirefoxOptions()
+            if Config.HEADLESS:
+                options.add_argument("--headless")
+            driver = webdriver.Firefox(service=service, options=options)
+        elif browser_name == "edge":
+            service = EdgeService(EdgeChromiumDriverManager().install())
+            options = webdriver.EdgeOptions()
+            if Config.HEADLESS:
+                options.add_argument("--headless")
+            driver = webdriver.Edge(service=service, options=options)
+        else:
+            raise ValueError(f"Unsupported browser: {browser_name}")
 
-    driver.implicitly_wait(Config.IMPLICIT_WAIT)
-    logger.info(f"Browser setup complete. Implicit wait set to {Config.IMPLICIT_WAIT} seconds")
-    yield driver
-    logger.info(f"Tearing down {browser_name} browser")
-    driver.quit()
-
+        driver.implicitly_wait(Config.IMPLICIT_WAIT)
+        logger.info(f"Browser setup complete. Implicit wait set to {Config.IMPLICIT_WAIT} seconds")
+        yield driver
+    except Exception as e:
+        logger.error(f"Failed to initialize {browser_name} browser: {str(e)}")
+        pytest.skip(f"Skipping test due to browser initialization failure: {str(e)}")
+    finally:
+        if 'driver' in locals():
+            logger.info(f"Tearing down {browser_name} browser")
+            driver.quit()
 
 @measure_time
 def test_python_search(browser):
@@ -111,3 +119,16 @@ def test_parameterized_search(browser, search_data):
         logger.info(f"Expected result '{search_data['expected_result']}' found in the first search result")
     else:
         logger.warning(f"Expected result '{search_data['expected_result']}' not found in the first search result")
+    logger.info(f"Parameterized search test for '{search_data['search_query']}' completed")
+@measure_time
+def test_search_with_invalid_query(browser):
+    logger.info("Starting search with invalid query test")
+    page = SearchPage(browser)
+    page.navigate()
+    logger.info(f"Searching for '{TestData.INVALID_SEARCH_QUERY}'")
+    page.search(TestData.INVALID_SEARCH_QUERY)
+    assert page.is_search_performed(), f"Search for '{TestData.INVALID_SEARCH_QUERY}' was not performed"
+    result_count = page.get_search_result_count()
+    logger.info(f"Found {result_count} search results")
+    assert result_count == 0, f"Unexpected search results found for '{TestData.INVALID_SEARCH_QUERY}'"
+    logger.info("Search with invalid query test completed successfully")

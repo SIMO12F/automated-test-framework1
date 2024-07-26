@@ -6,7 +6,8 @@ class Config:
     PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     # Browser settings
-    BROWSER = os.getenv('TEST_BROWSER', 'chrome')  # Options: "chrome", "firefox", "edge"
+    BROWSER = os.getenv('TEST_BROWSER', 'chrome')
+    BROWSERS = os.getenv('TEST_BROWSERS', 'chrome,firefox,edge').split(',')
     HEADLESS = os.getenv('TEST_HEADLESS', 'False').lower() == 'true'
 
     # Timeout settings
@@ -14,7 +15,8 @@ class Config:
     EXPLICIT_WAIT = int(os.getenv('TEST_EXPLICIT_WAIT', '20'))
 
     # Test execution settings
-    PARALLEL_EXECUTION = os.getenv('TEST_PARALLEL', 'False').lower() == 'true'
+    # In config.py
+    PARALLEL_EXECUTION = os.getenv('TEST_PARALLEL', 'True').lower() == 'true'
 
     # Reporting settings
     SCREENSHOT_DIR = os.path.join(PROJECT_ROOT, 'screenshots')
@@ -25,15 +27,15 @@ class Config:
 
     # URLs
     BASE_URLS = {
-        'dev': 'https://dev.example.com',
-        'staging': 'https://staging.example.com',
-        'prod': 'https://www.example.com'
+        'dev': 'https://www.python.org',
+        'staging': 'https://www.python.org',
+        'prod': 'https://www.python.org'
     }
 
     API_BASE_URLS = {
-        'dev': 'https://api.dev.example.com/v1/',
-        'staging': 'https://api.staging.example.com/v1/',
-        'prod': 'https://api.example.com/v1/'
+        'dev': 'https://jsonplaceholder.typicode.com/',
+        'staging': 'https://jsonplaceholder.typicode.com/',
+        'prod': 'https://jsonplaceholder.typicode.com/'
     }
 
     @classmethod
@@ -61,5 +63,3 @@ class Config:
     @classmethod
     def get_test_data_file(cls, filename):
         return os.path.join(cls.TEST_DATA_DIR, filename)
-
-    # Add any other configuration settings your project needsexport TEST_ENV=staging
