@@ -1,0 +1,22 @@
+INFO     automated_tests:conftest.py:67 Starting test session
+INFO     automated_tests:conftest.py:75 Setting up test: test_add_user
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:conftest.py:51 Started chrome browser in normal mode
+INFO     automated_tests:database.py:25 Database tables created successfully
+INFO     automated_tests:performance.py:23 Executing: Testing user addition to database
+INFO     automated_tests:database.py:46 User added successfully: John Doe (john@example.com)
+INFO     automated_tests:database.py:61 User retrieved: John Doe (john@example.com)
+INFO     automated_tests:performance.py:13 Function test_add_user took 0.03 seconds to execute
+INFO     automated_tests:conftest.py:79 Tearing down test: test_add_user
+INFO     automated_tests:conftest.py:75 Setting up test: test_get_user
+INFO     automated_tests:performance.py:23 Executing: Testing user retrieval from database
+INFO     automated_tests:database.py:46 User added successfully: Jane Doe (jane@example.com)
+INFO     automated_tests:database.py:61 User retrieved: Jane Doe (jane@example.com)
+INFO     automated_tests:performance.py:13 Function test_get_user took 0.03 seconds to execute
+INFO     automated_tests:conftest.py:79 Tearing down test: test_get_user
+INFO     automated_tests:database.py:34 Database tables dropped successfully
+INFO     automated_tests:conftest.py:56 Closed chrome browser
+INFO     automated_tests:conftest.py:71 Test session finished with exit status: 0

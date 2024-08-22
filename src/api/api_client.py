@@ -4,7 +4,7 @@ from src.logger import logger
 
 class APIClient:
     def __init__(self):
-        self.base_url = Config.get_api_base_url()
+        self.base_url = Config.API_BASE_URL
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": "AutomatedTestFramework/1.0",
@@ -38,28 +38,3 @@ class APIClient:
 
     def delete(self, endpoint):
         return self._send_request('DELETE', endpoint)
-
-    def patch(self, endpoint, data=None, json=None):
-        return self._send_request('PATCH', endpoint, data=data, json=json)
-
-    def head(self, endpoint):
-        return self._send_request('HEAD', endpoint)
-
-    def options(self, endpoint):
-        return self._send_request('OPTIONS', endpoint)
-
-    def get_json(self, endpoint, params=None):
-        response = self.get(endpoint, params)
-        return response.json()
-
-    def post_json(self, endpoint, data=None):
-        response = self.post(endpoint, json=data)
-        return response.json()
-
-    def put_json(self, endpoint, data=None):
-        response = self.put(endpoint, json=data)
-        return response.json()
-
-    def patch_json(self, endpoint, data=None):
-        response = self.patch(endpoint, json=data)
-        return response.json()

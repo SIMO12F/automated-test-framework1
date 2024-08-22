@@ -1,0 +1,87 @@
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D593558D0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:37 Error in test_get_all_posts: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D593558D0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/1 endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts/1
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/1 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D593EF310>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:49 Error in test_get_single_post: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/1 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D593EF310>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing POST /posts endpoint
+INFO     automated_tests:api_client.py:16 Making POST request to https://api.example.com/posts
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D5816AFE0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:68 Error in test_create_post: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D5816AFE0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing PUT /posts/1 endpoint
+INFO     automated_tests:api_client.py:16 Making PUT request to https://api.example.com/posts/1
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/1 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D57F0AAD0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:85 Error in test_update_post: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/1 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D57F0AAD0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing DELETE /posts/1 endpoint
+INFO     automated_tests:api_client.py:16 Making DELETE request to https://api.example.com/posts/1
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/1 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D59283DF0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:95 Error in test_delete_post: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/1 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D59283DF0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts/1
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/1 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D5819B220>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:107 Error in test_get_multiple_posts for post_id 1: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/1 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D5819B220>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts/2
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/2 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D580AE470>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:107 Error in test_get_multiple_posts for post_id 2: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/2 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D580AE470>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts/3
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/3 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D5937A9B0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:107 Error in test_get_multiple_posts for post_id 3: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/3 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D5937A9B0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts/4
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/4 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D596ED8A0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:107 Error in test_get_multiple_posts for post_id 4: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/4 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D596ED8A0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts/5
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/5 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D59414D00>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:107 Error in test_get_multiple_posts for post_id 5: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/5 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D59414D00>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing invalid endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/invalid_endpoint
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /invalid_endpoint (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D594335B0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:118 Error in test_invalid_endpoint: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /invalid_endpoint (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D594335B0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing API performance
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D59414AC0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:performance.py:44 Error during API benchmark: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D59414AC0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+ERROR    automated_tests:test_api.py:127 Error in test_api_performance: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D59414AC0>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing non-existent post (designed to fail)
+INFO     automated_tests:api_client.py:16 Making GET request to https://api.example.com/posts/9999
+ERROR    automated_tests:api_client.py:27 An error occurred while making the request: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /posts/9999 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000021D593D9B10>: Failed to resolve 'api.example.com' ([Errno 11001] getaddrinfo failed)"))
+INFO     automated_tests:performance.py:24 Executing: Testing user addition to database
+INFO     automated_tests:performance.py:14 Function test_add_user took 0.03 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing user retrieval from database
+INFO     automated_tests:performance.py:14 Function test_get_user took 0.03 seconds to execute
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:performance.py:24 Executing: Verifying download buttons presence
+INFO     automated_tests:visual_testing.py:9 Screenshot saved: C:\project\automated_test_framework\screenshots\download_buttons.png
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:performance.py:24 Executing: Verifying OS buttons presence
+INFO     automated_tests:visual_testing.py:9 Screenshot saved: C:\project\automated_test_framework\screenshots\os_buttons.png
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:performance.py:24 Executing: Verifying latest Python version
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:performance.py:24 Executing: Verifying main navigation elements
+INFO     automated_tests:visual_testing.py:9 Screenshot saved: C:\project\automated_test_framework\screenshots\main_navigation.png
+INFO     automated_tests:performance.py:14 Function test_main_navigation took 3.34 seconds to execute
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:performance.py:24 Executing: Testing search functionality
+INFO     automated_tests:visual_testing.py:9 Screenshot saved: C:\project\automated_test_framework\screenshots\search_results.png
+INFO     automated_tests:performance.py:14 Function test_search_functionality took 1.84 seconds to execute

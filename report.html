@@ -3,11 +3,332 @@
   <head>
     <meta charset="utf-8"/>
     <title id="head-title">report.html</title>
-      <link href="assets\style.css" rel="stylesheet" type="text/css"/>
+      <style type="text/css">body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  /* do not increase min-width as some may use split screens */
+  min-width: 800px;
+  color: #999;
+}
+
+h1 {
+  font-size: 24px;
+  color: black;
+}
+
+h2 {
+  font-size: 16px;
+  color: black;
+}
+
+p {
+  color: black;
+}
+
+a {
+  color: #999;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/******************************
+ * SUMMARY INFORMATION
+ ******************************/
+#environment td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  vertical-align: top;
+}
+#environment tr:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+#environment ul {
+  margin: 0;
+  padding: 0 20px;
+}
+
+/******************************
+ * TEST RESULT COLORS
+ ******************************/
+span.passed,
+.passed .col-result {
+  color: green;
+}
+
+span.skipped,
+span.xfailed,
+span.rerun,
+.skipped .col-result,
+.xfailed .col-result,
+.rerun .col-result {
+  color: orange;
+}
+
+span.error,
+span.failed,
+span.xpassed,
+.error .col-result,
+.failed .col-result,
+.xpassed .col-result {
+  color: red;
+}
+
+.col-links__extra {
+  margin-right: 3px;
+}
+
+/******************************
+ * RESULTS TABLE
+ *
+ * 1. Table Layout
+ * 2. Extra
+ * 3. Sorting items
+ *
+ ******************************/
+/*------------------
+ * 1. Table Layout
+ *------------------*/
+#results-table {
+  border: 1px solid #e6e6e6;
+  color: #999;
+  font-size: 12px;
+  width: 100%;
+}
+#results-table th,
+#results-table td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  text-align: left;
+}
+#results-table th {
+  font-weight: bold;
+}
+
+/*------------------
+ * 2. Extra
+ *------------------*/
+.logwrapper {
+  max-height: 230px;
+  overflow-y: scroll;
+  background-color: #e6e6e6;
+}
+.logwrapper.expanded {
+  max-height: none;
+}
+.logwrapper.expanded .logexpander:after {
+  content: "collapse [-]";
+}
+.logwrapper .logexpander {
+  z-index: 1;
+  position: sticky;
+  top: 10px;
+  width: max-content;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin: 10px 0 10px calc(100% - 80px);
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
+.logwrapper .logexpander:after {
+  content: "expand [+]";
+}
+.logwrapper .logexpander:hover {
+  color: #000;
+  border-color: #000;
+}
+.logwrapper .log {
+  min-height: 40px;
+  position: relative;
+  top: -50px;
+  height: calc(100% + 50px);
+  border: 1px solid #e6e6e6;
+  color: black;
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  padding: 5px;
+  padding-right: 80px;
+  white-space: pre-wrap;
+}
+
+div.media {
+  border: 1px solid #e6e6e6;
+  float: right;
+  height: 240px;
+  margin: 0 5px;
+  overflow: hidden;
+  width: 320px;
+}
+
+.media-container {
+  display: grid;
+  grid-template-columns: 25px auto 25px;
+  align-items: center;
+  flex: 1 1;
+  overflow: hidden;
+  height: 200px;
+}
+
+.media-container--fullscreen {
+  grid-template-columns: 0px auto 0px;
+}
+
+.media-container__nav--right,
+.media-container__nav--left {
+  text-align: center;
+  cursor: pointer;
+}
+
+.media-container__viewport {
+  cursor: pointer;
+  text-align: center;
+  height: inherit;
+}
+.media-container__viewport img,
+.media-container__viewport video {
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+}
+
+.media__name,
+.media__counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 0 0 25px;
+  align-items: center;
+}
+
+.collapsible td:not(.col-links) {
+  cursor: pointer;
+}
+.collapsible td:not(.col-links):hover::after {
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.col-result {
+  width: 130px;
+}
+.col-result:hover::after {
+  content: " (hide details)";
+}
+
+.col-result.collapsed:hover::after {
+  content: " (show details)";
+}
+
+#environment-header h2:hover::after {
+  content: " (hide details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#environment-header.collapsed h2:hover::after {
+  content: " (show details)";
+  color: #bbb;
+  font-style: italic;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/*------------------
+ * 3. Sorting items
+ *------------------*/
+.sortable {
+  cursor: pointer;
+}
+.sortable.desc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: -12.5px;
+  border: 10px solid #4caf50;
+  border-bottom: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+.sortable.asc:after {
+  content: " ";
+  position: relative;
+  left: 5px;
+  bottom: 12.5px;
+  border: 10px solid #4caf50;
+  border-top: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.hidden, .summary__reload__button.hidden {
+  display: none;
+}
+
+.summary__data {
+  flex: 0 0 550px;
+}
+.summary__reload {
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+}
+.summary__reload__button {
+  flex: 0 0 300px;
+  display: flex;
+  color: white;
+  font-weight: bold;
+  background-color: #4caf50;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.summary__reload__button:hover {
+  background-color: #46a049;
+}
+.summary__spacer {
+  flex: 0 0 550px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters,
+.collapse {
+  display: flex;
+  align-items: center;
+}
+.filters button,
+.collapse button {
+  color: #999;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.filters button:hover,
+.collapse button:hover {
+  color: #ccc;
+}
+
+.filter__label {
+  margin-right: 10px;
+}
+
+      </style>
+    
   </head>
   <body>
     <h1 id="title">report.html</h1>
-    <p>Report generated on 22-Jul-2024 at 00:12:56 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a>
+    <p>Report generated on 21-Aug-2024 at 13:22:27 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a>
         v4.1.1</p>
     <div id="environment-header">
       <h2>Environment</h2>
@@ -61,7 +382,7 @@
         <h2>Summary</h2>
         <div class="additional-summary prefix">
         </div>
-        <p class="run-count">6 tests took 00:00:42.</p>
+        <p class="run-count">6 tests took 00:00:53.</p>
         <p class="filter">(Un)check the boxes to filter the results.</p>
         <div class="summary__reload">
           <div class="summary__reload__button hidden" onclick="location.reload()">
@@ -108,7 +429,7 @@
     </table>
   </body>
   <footer>
-    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.10.5&#34;, &#34;Platform&#34;: &#34;Windows-10-10.0.22631-SP0&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;8.2.2&#34;, &#34;pluggy&#34;: &#34;1.5.0&#34;}, &#34;Plugins&#34;: {&#34;html&#34;: &#34;4.1.1&#34;, &#34;metadata&#34;: &#34;3.1.1&#34;}}, &#34;tests&#34;: {&#34;src/tests/test_example.py::test_example_page_title&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_example.py::test_example_page_title&#34;, &#34;duration&#34;: &#34;00:00:07&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_example.py::test_example_page_title&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:07&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;src/tests/test_example.py::test_example_page_heading&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_example.py::test_example_page_heading&#34;, &#34;duration&#34;: &#34;00:00:07&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_example.py::test_example_page_heading&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:07&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;src/tests/test_example.py::test_example_page_paragraph&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_example.py::test_example_page_paragraph&#34;, &#34;duration&#34;: &#34;00:00:06&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_example.py::test_example_page_paragraph&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:06&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;No log output captured.&#34;}], &#34;src/tests/test_search.py::test_python_search&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_search.py::test_python_search&#34;, &#34;duration&#34;: &#34;00:00:08&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_search.py::test_python_search&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:08&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-07-22 00:12:21,274 - src.logger - INFO - Setting up chrome browser\n2024-07-22 00:12:24,869 - src.logger - INFO - Browser setup complete. Implicit wait set to 10 seconds\n\n------------------------------ Captured log setup ------------------------------\nINFO     src.logger:test_search.py:15 Setting up chrome browser\nINFO     src.logger:test_search.py:36 Browser setup complete. Implicit wait set to 10 seconds\n\n----------------------------- Captured stderr call -----------------------------\n2024-07-22 00:12:24,872 - src.logger - INFO - Starting Python search test\n2024-07-22 00:12:24,872 - src.logger - INFO - Navigating to https://www.python.org\n2024-07-22 00:12:25,563 - src.logger - INFO - Searching for &amp;#x27;pycon&amp;#x27;\n2024-07-22 00:12:25,563 - src.logger - INFO - Performing search with query: &amp;#x27;pycon&amp;#x27;\n2024-07-22 00:12:26,475 - src.logger - INFO - Search completed\n2024-07-22 00:12:26,492 - src.logger - INFO - Search performed: True\n2024-07-22 00:12:26,492 - src.logger - INFO - Counting search results\n2024-07-22 00:12:26,512 - src.logger - INFO - Found 20 search results\n2024-07-22 00:12:26,512 - src.logger - INFO - Found 20 search results\n2024-07-22 00:12:26,512 - src.logger - INFO - Getting search results\n2024-07-22 00:12:26,699 - src.logger - INFO - Python search test completed successfully\n\n------------------------------ Captured log call -------------------------------\nINFO     src.logger:test_search.py:43 Starting Python search test\nINFO     src.logger:search_page.py:17 Navigating to https://www.python.org\nINFO     src.logger:test_search.py:46 Searching for &amp;#x27;pycon&amp;#x27;\nINFO     src.logger:search_page.py:21 Performing search with query: &amp;#x27;pycon&amp;#x27;\nINFO     src.logger:search_page.py:27 Search completed\nINFO     src.logger:search_page.py:36 Search performed: True\nINFO     src.logger:search_page.py:40 Counting search results\nINFO     src.logger:search_page.py:43 Found 20 search results\nINFO     src.logger:test_search.py:50 Found 20 search results\nINFO     src.logger:search_page.py:30 Getting search results\nINFO     src.logger:test_search.py:54 Python search test completed successfully\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-07-22 00:12:26,702 - src.logger - INFO - Tearing down browser\n\n---------------------------- Captured log teardown -----------------------------\nINFO     src.logger:test_search.py:38 Tearing down browser&#34;}], &#34;src/tests/test_search.py::test_empty_search&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_search.py::test_empty_search&#34;, &#34;duration&#34;: &#34;00:00:07&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_search.py::test_empty_search&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:07&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-07-22 00:12:33,028 - src.logger - INFO - Setting up chrome browser\n2024-07-22 00:12:36,646 - src.logger - INFO - Browser setup complete. Implicit wait set to 10 seconds\n\n------------------------------ Captured log setup ------------------------------\nINFO     src.logger:test_search.py:15 Setting up chrome browser\nINFO     src.logger:test_search.py:36 Browser setup complete. Implicit wait set to 10 seconds\n\n----------------------------- Captured stderr call -----------------------------\n2024-07-22 00:12:36,646 - src.logger - INFO - Starting empty search test\n2024-07-22 00:12:36,651 - src.logger - INFO - Navigating to https://www.python.org\n2024-07-22 00:12:37,279 - src.logger - INFO - Performing empty search\n2024-07-22 00:12:37,281 - src.logger - INFO - Performing search with query: &amp;#x27;&amp;#x27;\n2024-07-22 00:12:38,104 - src.logger - INFO - Search completed\n2024-07-22 00:12:38,114 - src.logger - INFO - Search performed: True\n2024-07-22 00:12:38,121 - src.logger - INFO - Getting search results\n2024-07-22 00:12:38,245 - src.logger - INFO - Empty search test completed successfully\n\n------------------------------ Captured log call -------------------------------\nINFO     src.logger:test_search.py:58 Starting empty search test\nINFO     src.logger:search_page.py:17 Navigating to https://www.python.org\nINFO     src.logger:test_search.py:61 Performing empty search\nINFO     src.logger:search_page.py:21 Performing search with query: &amp;#x27;&amp;#x27;\nINFO     src.logger:search_page.py:27 Search completed\nINFO     src.logger:search_page.py:36 Search performed: True\nINFO     src.logger:search_page.py:30 Getting search results\nINFO     src.logger:test_search.py:68 Empty search test completed successfully\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-07-22 00:12:38,246 - src.logger - INFO - Tearing down browser\n\n---------------------------- Captured log teardown -----------------------------\nINFO     src.logger:test_search.py:38 Tearing down browser&#34;}], &#34;src/tests/test_search.py::test_alternative_search&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_search.py::test_alternative_search&#34;, &#34;duration&#34;: &#34;00:00:08&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_search.py::test_alternative_search&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:08&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-07-22 00:12:44,577 - src.logger - INFO - Setting up chrome browser\n2024-07-22 00:12:48,192 - src.logger - INFO - Browser setup complete. Implicit wait set to 10 seconds\n\n------------------------------ Captured log setup ------------------------------\nINFO     src.logger:test_search.py:15 Setting up chrome browser\nINFO     src.logger:test_search.py:36 Browser setup complete. Implicit wait set to 10 seconds\n\n----------------------------- Captured stderr call -----------------------------\n2024-07-22 00:12:48,193 - src.logger - INFO - Starting alternative search test\n2024-07-22 00:12:48,193 - src.logger - INFO - Navigating to https://www.python.org\n2024-07-22 00:12:48,871 - src.logger - INFO - Searching for &amp;#x27;django&amp;#x27;\n2024-07-22 00:12:48,871 - src.logger - INFO - Performing search with query: &amp;#x27;django&amp;#x27;\n2024-07-22 00:12:49,849 - src.logger - INFO - Search completed\n2024-07-22 00:12:49,862 - src.logger - INFO - Search performed: True\n2024-07-22 00:12:49,862 - src.logger - INFO - Counting search results\n2024-07-22 00:12:49,884 - src.logger - INFO - Found 20 search results\n2024-07-22 00:12:49,884 - src.logger - INFO - Found 20 search results\n2024-07-22 00:12:49,884 - src.logger - INFO - Getting search results\n2024-07-22 00:12:50,089 - src.logger - INFO - Alternative search test completed successfully\n\n------------------------------ Captured log call -------------------------------\nINFO     src.logger:test_search.py:72 Starting alternative search test\nINFO     src.logger:search_page.py:17 Navigating to https://www.python.org\nINFO     src.logger:test_search.py:75 Searching for &amp;#x27;django&amp;#x27;\nINFO     src.logger:search_page.py:21 Performing search with query: &amp;#x27;django&amp;#x27;\nINFO     src.logger:search_page.py:27 Search completed\nINFO     src.logger:search_page.py:36 Search performed: True\nINFO     src.logger:search_page.py:40 Counting search results\nINFO     src.logger:search_page.py:43 Found 20 search results\nINFO     src.logger:test_search.py:79 Found 20 search results\nINFO     src.logger:search_page.py:30 Getting search results\nINFO     src.logger:test_search.py:83 Alternative search test completed successfully\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-07-22 00:12:50,092 - src.logger - INFO - Tearing down browser\n\n---------------------------- Captured log teardown -----------------------------\nINFO     src.logger:test_search.py:38 Tearing down browser&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;report.html&#34;}"></div>
+    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.10.5&#34;, &#34;Platform&#34;: &#34;Windows-10-10.0.22631-SP0&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;8.3.2&#34;, &#34;pluggy&#34;: &#34;1.5.0&#34;}, &#34;Plugins&#34;: {&#34;allure-pytest&#34;: &#34;2.13.5&#34;, &#34;Faker&#34;: &#34;26.3.0&#34;, &#34;html&#34;: &#34;4.1.1&#34;, &#34;metadata&#34;: &#34;3.1.1&#34;, &#34;xdist&#34;: &#34;3.6.1&#34;, &#34;requests-mock&#34;: &#34;1.10.0&#34;}}, &#34;tests&#34;: {&#34;src/tests/test_python_org.py::test_main_navigation&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_python_org.py::test_main_navigation&#34;, &#34;duration&#34;: &#34;00:00:04&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_python_org.py::test_main_navigation&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:04&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-08-21 13:21:30,306 - automated_tests - INFO - Setting up test: test_main_navigation\n2024-08-21 13:21:32,875 - automated_tests - INFO - Started chrome browser in normal mode\n\n------------------------------ Captured log setup ------------------------------\nINFO     automated_tests:conftest.py:75 Setting up test: test_main_navigation\nINFO     automated_tests:conftest.py:51 Started chrome browser in normal mode\n\n----------------------------- Captured stderr call -----------------------------\n2024-08-21 13:21:32,877 - automated_tests - INFO - Executing: Verifying main navigation elements\n2024-08-21 13:21:33,711 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:21:33,712 - automated_tests - INFO - Navigated to https://www.python.org\n2024-08-21 13:21:33,728 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:21:33,757 - automated_tests - INFO - Found 69 main menu items\n2024-08-21 13:21:33,987 - automated_tests - INFO - Screenshot saved: C:\\project\\automated_test_framework\\screenshots\\main_navigation_20240821_132133.png\n2024-08-21 13:21:34,743 - automated_tests - INFO - Menu item text: About\n2024-08-21 13:21:34,743 - automated_tests - INFO - Menu item text: Downloads\n2024-08-21 13:21:34,760 - automated_tests - INFO - Menu item text: Documentation\n2024-08-21 13:21:34,775 - automated_tests - INFO - Menu item text: Community\n2024-08-21 13:21:34,782 - automated_tests - INFO - Menu item text: Success Stories\n2024-08-21 13:21:34,791 - automated_tests - INFO - Menu item text: News\n2024-08-21 13:21:34,799 - automated_tests - INFO - Menu item text: Events\n2024-08-21 13:21:34,799 - automated_tests - INFO - Function test_main_navigation took 1.92 seconds to execute\n\n------------------------------ Captured log call -------------------------------\nINFO     automated_tests:performance.py:23 Executing: Verifying main navigation elements\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:21 Navigated to https://www.python.org\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:46 Found 69 main menu items\nINFO     automated_tests:screenshot.py:21 Screenshot saved: C:\\project\\automated_test_framework\\screenshots\\main_navigation_20240821_132133.png\nINFO     automated_tests:test_python_org.py:43 Menu item text: About\nINFO     automated_tests:test_python_org.py:43 Menu item text: Downloads\nINFO     automated_tests:test_python_org.py:43 Menu item text: Documentation\nINFO     automated_tests:test_python_org.py:43 Menu item text: Community\nINFO     automated_tests:test_python_org.py:43 Menu item text: Success Stories\nINFO     automated_tests:test_python_org.py:43 Menu item text: News\nINFO     automated_tests:test_python_org.py:43 Menu item text: Events\nINFO     automated_tests:performance.py:13 Function test_main_navigation took 1.92 seconds to execute\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-08-21 13:21:34,799 - automated_tests - INFO - Tearing down test: test_main_navigation\n\n---------------------------- Captured log teardown -----------------------------\nINFO     automated_tests:conftest.py:79 Tearing down test: test_main_navigation&#34;}], &#34;src/tests/test_python_org.py::test_search_functionality&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_python_org.py::test_search_functionality&#34;, &#34;duration&#34;: &#34;00:00:23&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_python_org.py::test_search_functionality&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:23&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-08-21 13:21:34,799 - automated_tests - INFO - Setting up test: test_search_functionality\n\n------------------------------ Captured log setup ------------------------------\nINFO     automated_tests:conftest.py:75 Setting up test: test_search_functionality\n\n----------------------------- Captured stderr call -----------------------------\n2024-08-21 13:21:34,799 - automated_tests - INFO - Executing: Testing search functionality and autocomplete\n2024-08-21 13:21:35,173 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:21:35,173 - automated_tests - INFO - Navigated to https://www.python.org\n2024-08-21 13:21:35,187 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:21:35,312 - automated_tests - INFO - Entered search term: python\n2024-08-21 13:21:35,694 - automated_tests - INFO - Performed search with query: python\n2024-08-21 13:21:35,792 - automated_tests - INFO - Found 20 search results\n2024-08-21 13:21:35,937 - automated_tests - INFO - Screenshot saved: C:\\project\\automated_test_framework\\screenshots\\search_results_20240821_132135.png\n2024-08-21 13:21:36,241 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:21:36,241 - automated_tests - INFO - Navigated to https://www.python.org\n2024-08-21 13:21:36,256 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:21:36,348 - automated_tests - INFO - Entered search term: py\n2024-08-21 13:21:57,461 - automated_tests - WARNING - No autocomplete items found\n2024-08-21 13:21:57,461 - automated_tests - WARNING - No autocomplete suggestions displayed\n2024-08-21 13:21:57,461 - automated_tests - INFO - Function test_search_functionality took 22.66 seconds to execute\n\n------------------------------ Captured log call -------------------------------\nINFO     automated_tests:performance.py:23 Executing: Testing search functionality and autocomplete\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:21 Navigated to https://www.python.org\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:42 Entered search term: python\nINFO     automated_tests:python_home_page.py:36 Performed search with query: python\nINFO     automated_tests:python_search_results_page.py:19 Found 20 search results\nINFO     automated_tests:screenshot.py:21 Screenshot saved: C:\\project\\automated_test_framework\\screenshots\\search_results_20240821_132135.png\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:21 Navigated to https://www.python.org\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:42 Entered search term: py\nWARNING  automated_tests:python_home_page.py:65 No autocomplete items found\nWARNING  automated_tests:test_python_org.py:65 No autocomplete suggestions displayed\nINFO     automated_tests:performance.py:13 Function test_search_functionality took 22.66 seconds to execute\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-08-21 13:21:57,462 - automated_tests - INFO - Tearing down test: test_search_functionality\n\n---------------------------- Captured log teardown -----------------------------\nINFO     automated_tests:conftest.py:79 Tearing down test: test_search_functionality&#34;}], &#34;src/tests/test_python_org.py::test_invalid_search&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_python_org.py::test_invalid_search&#34;, &#34;duration&#34;: &#34;00:00:22&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_python_org.py::test_invalid_search&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:22&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-08-21 13:21:57,465 - automated_tests - INFO - Setting up test: test_invalid_search\n\n------------------------------ Captured log setup ------------------------------\nINFO     automated_tests:conftest.py:75 Setting up test: test_invalid_search\n\n----------------------------- Captured stderr call -----------------------------\n2024-08-21 13:21:57,466 - automated_tests - INFO - Executing: Testing invalid search\n2024-08-21 13:21:57,851 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:21:57,851 - automated_tests - INFO - Navigated to https://www.python.org\n2024-08-21 13:21:57,865 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:21:58,012 - automated_tests - INFO - Entered search term: xyzabcdefghijklmnop\n2024-08-21 13:21:58,386 - automated_tests - INFO - Performed search with query: xyzabcdefghijklmnop\n2024-08-21 13:22:19,469 - automated_tests - ERROR - Elements not found with locator: (&amp;#x27;css selector&amp;#x27;, &amp;#x27;ul.list-recent-events li&amp;#x27;)\n2024-08-21 13:22:19,469 - automated_tests - WARNING - No search results found\n2024-08-21 13:22:19,631 - automated_tests - INFO - Screenshot saved: C:\\project\\automated_test_framework\\screenshots\\invalid_search_results_20240821_132219.png\n2024-08-21 13:22:19,631 - automated_tests - INFO - Function test_invalid_search took 22.16 seconds to execute\n\n------------------------------ Captured log call -------------------------------\nINFO     automated_tests:performance.py:23 Executing: Testing invalid search\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:21 Navigated to https://www.python.org\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:42 Entered search term: xyzabcdefghijklmnop\nINFO     automated_tests:python_home_page.py:36 Performed search with query: xyzabcdefghijklmnop\nERROR    automated_tests:base_page.py:27 Elements not found with locator: (&amp;#x27;css selector&amp;#x27;, &amp;#x27;ul.list-recent-events li&amp;#x27;)\nWARNING  automated_tests:python_search_results_page.py:22 No search results found\nINFO     automated_tests:screenshot.py:21 Screenshot saved: C:\\project\\automated_test_framework\\screenshots\\invalid_search_results_20240821_132219.png\nINFO     automated_tests:performance.py:13 Function test_invalid_search took 22.16 seconds to execute\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-08-21 13:22:19,633 - automated_tests - INFO - Tearing down test: test_invalid_search\n\n---------------------------- Captured log teardown -----------------------------\nINFO     automated_tests:conftest.py:79 Tearing down test: test_invalid_search&#34;}], &#34;src/tests/test_python_org.py::test_downloads_page_loads&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_python_org.py::test_downloads_page_loads&#34;, &#34;duration&#34;: &#34;771 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_python_org.py::test_downloads_page_loads&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;771 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-08-21 13:22:19,635 - automated_tests - INFO - Setting up test: test_downloads_page_loads\n\n------------------------------ Captured log setup ------------------------------\nINFO     automated_tests:conftest.py:75 Setting up test: test_downloads_page_loads\n\n----------------------------- Captured stderr call -----------------------------\n2024-08-21 13:22:19,637 - automated_tests - INFO - Executing: Verifying downloads page loads\n2024-08-21 13:22:20,386 - automated_tests - INFO - Downloads page loaded successfully\n2024-08-21 13:22:20,387 - automated_tests - INFO - Navigated to https://www.python.org/downloads/\n2024-08-21 13:22:20,404 - automated_tests - INFO - Downloads page loaded successfully\n2024-08-21 13:22:20,404 - automated_tests - INFO - Function test_downloads_page_loads took 0.77 seconds to execute\n\n------------------------------ Captured log call -------------------------------\nINFO     automated_tests:performance.py:23 Executing: Verifying downloads page loads\nINFO     automated_tests:python_downloads_page.py:28 Downloads page loaded successfully\nINFO     automated_tests:python_downloads_page.py:21 Navigated to https://www.python.org/downloads/\nINFO     automated_tests:test_python_org.py:91 Downloads page loaded successfully\nINFO     automated_tests:performance.py:13 Function test_downloads_page_loads took 0.77 seconds to execute\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-08-21 13:22:20,406 - automated_tests - INFO - Tearing down test: test_downloads_page_loads\n\n---------------------------- Captured log teardown -----------------------------\nINFO     automated_tests:conftest.py:79 Tearing down test: test_downloads_page_loads&#34;}], &#34;src/tests/test_python_org.py::test_page_load_performance&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_python_org.py::test_page_load_performance&#34;, &#34;duration&#34;: &#34;419 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_python_org.py::test_page_load_performance&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;419 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-08-21 13:22:20,408 - automated_tests - INFO - Setting up test: test_page_load_performance\n\n------------------------------ Captured log setup ------------------------------\nINFO     automated_tests:conftest.py:75 Setting up test: test_page_load_performance\n\n----------------------------- Captured stderr call -----------------------------\n2024-08-21 13:22:20,410 - automated_tests - INFO - Executing: Testing page load performance\n2024-08-21 13:22:20,410 - automated_tests - INFO - Starting page load performance test. Threshold: 5.0 seconds\n2024-08-21 13:22:20,802 - automated_tests - INFO - Page loaded successfully\n2024-08-21 13:22:20,803 - automated_tests - INFO - Navigated to https://www.python.org\n2024-08-21 13:22:20,823 - automated_tests - INFO - Page load time: 0.34 seconds\n2024-08-21 13:22:20,823 - automated_tests - INFO - Measured page load time: 0.34 seconds\n2024-08-21 13:22:20,823 - automated_tests - INFO - Page load performance test passed successfully\n2024-08-21 13:22:20,823 - automated_tests - INFO - Function test_page_load_performance took 0.41 seconds to execute\n\n------------------------------ Captured log call -------------------------------\nINFO     automated_tests:performance.py:23 Executing: Testing page load performance\nINFO     automated_tests:test_python_org.py:106 Starting page load performance test. Threshold: 5.0 seconds\nINFO     automated_tests:python_home_page.py:28 Page loaded successfully\nINFO     automated_tests:python_home_page.py:21 Navigated to https://www.python.org\nINFO     automated_tests:performance.py:42 Page load time: 0.34 seconds\nINFO     automated_tests:test_python_org.py:115 Measured page load time: 0.34 seconds\nINFO     automated_tests:test_python_org.py:119 Page load performance test passed successfully\nINFO     automated_tests:performance.py:13 Function test_page_load_performance took 0.41 seconds to execute\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-08-21 13:22:20,824 - automated_tests - INFO - Tearing down test: test_page_load_performance\n\n---------------------------- Captured log teardown -----------------------------\nINFO     automated_tests:conftest.py:79 Tearing down test: test_page_load_performance&#34;}], &#34;src/tests/test_python_org.py::test_key_page_navigation&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;src/tests/test_python_org.py::test_key_page_navigation&#34;, &#34;duration&#34;: &#34;00:00:03&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;src/tests/test_python_org.py::test_key_page_navigation&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:03&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;---------------------------- Captured stderr setup -----------------------------\n2024-08-21 13:22:20,829 - automated_tests - INFO - Setting up test: test_key_page_navigation\n\n------------------------------ Captured log setup ------------------------------\nINFO     automated_tests:conftest.py:75 Setting up test: test_key_page_navigation\n\n----------------------------- Captured stderr call -----------------------------\n2024-08-21 13:22:20,831 - automated_tests - INFO - Executing: Testing navigation to key pages\n2024-08-21 13:22:20,832 - automated_tests - INFO - Attempting to navigate to about page (attempt 1)\n2024-08-21 13:22:21,222 - automated_tests - INFO - Current URL after navigation: https://www.python.org/about/\n2024-08-21 13:22:21,222 - automated_tests - INFO - Successfully navigated to about page\n2024-08-21 13:22:21,222 - automated_tests - INFO - Attempting to navigate to documentation page (attempt 1)\n2024-08-21 13:22:21,539 - automated_tests - INFO - Current URL after navigation: https://www.python.org/doc/\n2024-08-21 13:22:21,539 - automated_tests - INFO - Successfully navigated to documentation page\n2024-08-21 13:22:21,540 - automated_tests - INFO - Function test_key_page_navigation took 0.71 seconds to execute\n\n------------------------------ Captured log call -------------------------------\nINFO     automated_tests:performance.py:23 Executing: Testing navigation to key pages\nINFO     automated_tests:test_python_org.py:137 Attempting to navigate to about page (attempt 1)\nINFO     automated_tests:test_python_org.py:143 Current URL after navigation: https://www.python.org/about/\nINFO     automated_tests:test_python_org.py:149 Successfully navigated to about page\nINFO     automated_tests:test_python_org.py:137 Attempting to navigate to documentation page (attempt 1)\nINFO     automated_tests:test_python_org.py:143 Current URL after navigation: https://www.python.org/doc/\nINFO     automated_tests:test_python_org.py:149 Successfully navigated to documentation page\nINFO     automated_tests:performance.py:13 Function test_key_page_navigation took 0.71 seconds to execute\n\n--------------------------- Captured stderr teardown ---------------------------\n2024-08-21 13:22:21,541 - automated_tests - INFO - Tearing down test: test_key_page_navigation\n2024-08-21 13:22:23,807 - automated_tests - INFO - Closed chrome browser\n\n---------------------------- Captured log teardown -----------------------------\nINFO     automated_tests:conftest.py:79 Tearing down test: test_key_page_navigation\nINFO     automated_tests:conftest.py:56 Closed chrome browser&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;report.html&#34;}"></div>
     <script>
       (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const { getCollapsedCategory, setCollapsedIds } = require('./storage.js')

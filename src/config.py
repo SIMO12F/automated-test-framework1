@@ -1,65 +1,90 @@
+from pathlib import Path
 import os
-
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 class Config:
-    # Project Root
-    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # Project structure
+    PROJECT_ROOT = Path(__file__).parent.parent.absolute()
+    SCREENSHOT_DIR = PROJECT_ROOT / 'screenshots'
+    REPORT_DIR = PROJECT_ROOT / 'reports'
+    LOG_DIR = PROJECT_ROOT / 'logs'
+    TEST_DATA_DIR = PROJECT_ROOT / 'test_data'
 
-    # Browser settings
+    # Test execution settings
     BROWSER = os.getenv('TEST_BROWSER', 'chrome')
     BROWSERS = os.getenv('TEST_BROWSERS', 'chrome,firefox,edge').split(',')
     HEADLESS = os.getenv('TEST_HEADLESS', 'False').lower() == 'true'
-
-    # Timeout settings
-    IMPLICIT_WAIT = int(os.getenv('TEST_IMPLICIT_WAIT', '10'))
-    EXPLICIT_WAIT = int(os.getenv('TEST_EXPLICIT_WAIT', '20'))
-
-    # Test execution settings
-    # In config.py
-    PARALLEL_EXECUTION = os.getenv('TEST_PARALLEL', 'True').lower() == 'true'
-
-    # Reporting settings
-    SCREENSHOT_DIR = os.path.join(PROJECT_ROOT, 'screenshots')
-    REPORT_DIR = os.path.join(PROJECT_ROOT, 'reports')
-
-    # Environment settings
-    ENVIRONMENT = os.getenv('TEST_ENV', 'dev')  # Options: 'dev', 'staging', 'prod'
+    ENVIRONMENT = os.getenv('TEST_ENVIRONMENT', 'development')
 
     # URLs
-    BASE_URLS = {
-        'dev': 'https://www.python.org',
-        'staging': 'https://www.python.org',
-        'prod': 'https://www.python.org'
-    }
+    BASE_URL = "https://www.python.org"
+    API_BASE_URL = os.getenv('API_BASE_URL', 'https://api.python.org')
 
-    API_BASE_URLS = {
-        'dev': 'https://jsonplaceholder.typicode.com/',
-        'staging': 'https://jsonplaceholder.typicode.com/',
-        'prod': 'https://jsonplaceholder.typicode.com/'
-    }
+    # Timeouts and waits
+    IMPLICIT_WAIT = int(os.getenv('TEST_IMPLICIT_WAIT', '10'))
+    EXPLICIT_WAIT = int(os.getenv('TEST_EXPLICIT_WAIT', '20'))
+    PAGE_LOAD_TIMEOUT = int(os.getenv('PAGE_LOAD_TIMEOUT', '30'))
+    API_TIMEOUT = float(os.getenv('API_TIMEOUT', '5.0'))
 
-    @classmethod
-    def get_base_url(cls):
-        return cls.BASE_URLS.get(cls.ENVIRONMENT, cls.BASE_URLS['dev'])
-
-    @classmethod
-    def get_api_base_url(cls):
-        return cls.API_BASE_URLS.get(cls.ENVIRONMENT, cls.API_BASE_URLS['dev'])
-
-    # Logging settings
+    # Logging
     LOG_LEVEL = os.getenv('TEST_LOG_LEVEL', 'INFO')
-    LOG_FILE = os.path.join(PROJECT_ROOT, 'logs', 'test_execution.log')
+    LOG_FILE = LOG_DIR / 'test_execution.log'
 
-    @classmethod
-    def get_log_dir(cls):
-        log_dir = os.path.dirname(cls.LOG_FILE)
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
-        return log_dir
+    # Performance and visual testing
+    PERFORMANCE_THRESHOLD = float(os.getenv('PERFORMANCE_THRESHOLD', '5.0'))
+    VISUAL_DIFF_THRESHOLD = float(os.getenv('VISUAL_DIFF_THRESHOLD', '0.1'))
+
+    # Accessibility testing
+    GENERATE_ACCESSIBILITY_REPORT = os.getenv('GENERATE_ACCESSIBILITY_REPORT', 'False').lower() == 'true'
+    ACCESSIBILITY_STANDARD = os.getenv('ACCESSIBILITY_STANDARD', 'WCAG2AA')
+
+    # Database
+    DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///test.db')
 
     # Test data
-    TEST_DATA_DIR = os.path.join(PROJECT_ROOT, 'test_data')
+    TEST_USER_EMAIL = os.getenv('TEST_USER_EMAIL', 'test@example.com')
+    TEST_USER_PASSWORD = os.getenv('TEST_USER_PASSWORD', 'password123')
+
+    # CI/CD
+    CI_EXECUTION = os.getenv('CI', 'False').lower() == 'true'
 
     @classmethod
-    def get_test_data_file(cls, filename):
-        return os.path.join(cls.TEST_DATA_DIR, filename)
+    def setup(cls):
+        """Create necessary directories if they don't exist."""
+        for directory in [cls.SCREENSHOT_DIR, cls.REPORT_DIR, cls.LOG_DIR, cls.TEST_DATA_DIR]:
+            directory.mkdir(parents=True, exist_ok=True)
+
+    @staticmethod
+    def get_chrome_options():
+        chrome_options = ChromeOptions()
+        if Config.HEADLESS:
+            chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_argument('--disable-software-rasterizer')
+        chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument('--no-first-run')
+        chrome_options.add_argument('--no-default-browser-check')
+        chrome_options.add_argument('--disable-popup-blocking')
+        chrome_options.add_argument('--disable-notifications')
+        chrome_options.add_argument('--disable-infobars')
+        chrome_options.add_argument('--disable-search-engine-choice-screen')
+        chrome_options.add_experimental_option('excludeSwitches', ['enable-logging', 'enable-automation'])
+        chrome_options.add_experimental_option('useAutomationExtension', False)
+        prefs = {
+            "profile.default_content_setting_values.notifications": 2,
+            "credentials_enable_service": False,
+            "profile.password_manager_enabled": False,
+            "autofill.profile_enabled": False,
+            "autofill.credit_card_enabled": False,
+            "distribution.suppress_first_run_bubble": True,
+            "distribution.import_search_engine_dialog_shown": True,
+            "distribution.import_bookmarks_dialog_shown": True,
+        }
+        chrome_options.add_experimental_option("prefs", prefs)
+        return chrome_options
+
+# Create necessary directories
+Config.setup()

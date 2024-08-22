@@ -1,0 +1,34 @@
+import pytest
+from src.pages.python_home_page import PythonHomePage
+from src.pages.python_search_results_page import PythonSearchResultsPage
+from src.utils.visual_testing import compare_images
+from src.utils.screenshot import capture_screenshot
+from src.utils.accessibility_testing import run_accessibility_test
+from src.utils.data_loader import load_csv_data
+from src.utils.performance import measure_time, log_test_step, measure_page_load_time
+from src.config import Config
+from src.logger import logger
+
+# ... (keep all other test functions as they are)
+
+def load_test_data():
+    try:
+        return load_csv_data("python_org_test_data.csv")
+    except FileNotFoundError:
+        logger.warning("python_org_test_data.csv not found. Using default test data.")
+        return [
+            {"search_term": "python", "expected_text": "Python is a programming language"},
+            {"search_term": "django", "expected_text": "Django is a high-level Python web framework"}
+        ]
+
+@pytest.mark.parametrize("test_data", load_test_data())
+@measure_time
+@log_test_step("Testing Python.org with CSV data")
+def test_python_org_with_csv_data(python_home, driver, test_data):
+    python_home.navigate()
+    python_home.wait_for_page_load()
+    python_home.perform_search(test_data['search_term'])
+    assert test_data['expected_text'] in driver.page_source, f"Expected text '{test_data['expected_text']}' not found for search term '{test_data['search_term']}'"
+
+if __name__ == "__main__":
+    pytest.main(["-v", __file__])

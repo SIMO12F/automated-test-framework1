@@ -1,0 +1,19 @@
+def load_csv_data(file_name):
+    file_path = os.path.join(Config.TEST_DATA_DIR, file_name)
+    if not os.path.exists(file_path):
+        logger.warning(f"CSV file not found: {file_path}")
+        # Create a simple CSV file with test data
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['os', 'version'])
+            writer.writerow(['Windows', '3.9.5'])
+            writer.writerow(['MacOS', '3.8.10'])
+            writer.writerow(['Linux', '3.7.11'])
+        logger.info(f"Created sample CSV file: {file_path}")
+
+    with open(file_path, 'r') as f:
+        reader = csv.DictReader(f)
+        data = list(reader)
+    logger.info(f"Successfully loaded CSV data from {file_name}")
+    return data

@@ -1,0 +1,101 @@
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_get_all_posts took 0.10 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/1 endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts/1
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_get_single_post took 0.05 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing POST /posts endpoint
+INFO     automated_tests:api_client.py:16 Making POST request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 201
+INFO     automated_tests:performance.py:14 Function test_create_post took 0.34 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing PUT /posts/1 endpoint
+INFO     automated_tests:api_client.py:16 Making PUT request to https://jsonplaceholder.typicode.com/posts/1
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_update_post took 0.30 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing DELETE /posts/1 endpoint
+INFO     automated_tests:api_client.py:16 Making DELETE request to https://jsonplaceholder.typicode.com/posts/1
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_delete_post took 0.13 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts/1
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_get_multiple_posts took 0.03 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts/2
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_get_multiple_posts took 0.03 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts/3
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_get_multiple_posts took 0.03 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts/4
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_get_multiple_posts took 0.03 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing GET /posts/{post_id} endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts/5
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:14 Function test_get_multiple_posts took 0.05 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing invalid endpoint
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/invalid_endpoint
+ERROR    automated_tests:api_client.py:23 HTTP error occurred: 404 Client Error: Not Found for url: https://jsonplaceholder.typicode.com/invalid_endpoint
+ERROR    automated_tests:api_client.py:24 Response content: b'{}'
+INFO     automated_tests:performance.py:14 Function test_invalid_endpoint took 0.34 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing API performance
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts
+INFO     automated_tests:api_client.py:20 Received response with status code: 200
+INFO     automated_tests:performance.py:50 Average response time for GET /posts: 0.04 seconds
+INFO     automated_tests:performance.py:14 Function test_api_performance took 0.37 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing non-existent post (designed to fail)
+INFO     automated_tests:api_client.py:16 Making GET request to https://jsonplaceholder.typicode.com/posts/9999
+ERROR    automated_tests:api_client.py:23 HTTP error occurred: 404 Client Error: Not Found for url: https://jsonplaceholder.typicode.com/posts/9999
+ERROR    automated_tests:api_client.py:24 Response content: b'{}'
+INFO     automated_tests:performance.py:14 Function test_non_existent_post took 0.32 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing user addition to database
+INFO     automated_tests:performance.py:14 Function test_add_user took 0.01 seconds to execute
+INFO     automated_tests:performance.py:24 Executing: Testing user retrieval from database
+INFO     automated_tests:performance.py:14 Function test_get_user took 0.02 seconds to execute
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:performance.py:24 Executing: Verifying latest Python version
+INFO     automated_tests:performance.py:14 Function test_latest_python_version took 3.95 seconds to execute
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:performance.py:24 Executing: Verifying main navigation elements
+INFO     automated_tests:visual_testing.py:9 Screenshot saved: C:\project\automated_test_framework\screenshots\main_navigation.png
+INFO     automated_tests:performance.py:14 Function test_main_navigation took 2.04 seconds to execute
+INFO     WDM:logger.py:11 ====== WebDriver manager ======
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+INFO     WDM:logger.py:11 Driver [C:\Users\mohamed\.wdm\drivers\chromedriver\win64\127.0.6533.119\chromedriver-win32/chromedriver.exe] found in cache
+INFO     automated_tests:performance.py:24 Executing: Testing search functionality
+INFO     automated_tests:visual_testing.py:9 Screenshot saved: C:\project\automated_test_framework\screenshots\search_results.png
+INFO     automated_tests:performance.py:14 Function test_search_functionality took 1.37 seconds to execute
