@@ -8,6 +8,7 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.webdriver.chrome.options import Options
 
 # Add the project root directory to the Python path
 project_root = os.path.abspath(os.path.dirname(__file__))
@@ -96,3 +97,15 @@ def pytest_runtest_makereport(item, call):
             driver.save_screenshot(f"{Config.SCREENSHOT_DIR}/{item.name}_failure.png")
         except Exception as e:
             logger.error(f"Failed to capture screenshot: {str(e)}")
+
+
+@pytest.fixture(scope="session")
+def driver():
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+
+    driver = webdriver.Chrome(options=chrome_options)
+    yield driver
+    driver.quit()
