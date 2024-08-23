@@ -1,7 +1,7 @@
 import pytest
 import requests
 from src.api.api_client import APIClient
-from src.utils.performance import measure_time, log_test_step, benchmark_api
+from src.utils.performance import measure_time, log_test_step
 from src.config import Config
 @pytest.fixture(scope="module")
 def api_client():

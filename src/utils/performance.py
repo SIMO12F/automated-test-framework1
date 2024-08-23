@@ -1,7 +1,9 @@
 import time
 from functools import wraps
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from src.logger import logger
-
 
 def measure_time(func):
     @wraps(func)
@@ -12,9 +14,7 @@ def measure_time(func):
         execution_time = end_time - start_time
         logger.info(f"Function {func.__name__} took {execution_time:.2f} seconds to execute")
         return result
-
     return wrapper
-
 
 def log_test_step(step_description):
     def decorator(func):
@@ -22,11 +22,8 @@ def log_test_step(step_description):
         def wrapper(*args, **kwargs):
             logger.info(f"Executing: {step_description}")
             return func(*args, **kwargs)
-
         return wrapper
-
     return decorator
-
 
 def measure_page_load_time(driver):
     navigation_start = driver.execute_script("return performance.timing.navigationStart")
@@ -42,7 +39,6 @@ def measure_page_load_time(driver):
     logger.info(f"Page load time: {load_time:.2f} seconds")
     return load_time
 
-
 def wait_for_ajax(driver):
     wait = WebDriverWait(driver, 10)
     try:
@@ -50,7 +46,6 @@ def wait_for_ajax(driver):
         wait.until(lambda driver: driver.execute_script('return document.readyState') == 'complete')
     except Exception as e:
         logger.warning(f"Error waiting for AJAX: {str(e)}")
-
 
 def wait_for_element_to_be_clickable(driver, locator, timeout=10):
     wait = WebDriverWait(driver, timeout)
@@ -60,7 +55,6 @@ def wait_for_element_to_be_clickable(driver, locator, timeout=10):
     except TimeoutException:
         logger.error(f"Element not clickable: {locator}")
         return None
-
 
 def retry(max_attempts=3, delay=1):
     def decorator(func):
@@ -75,7 +69,5 @@ def retry(max_attempts=3, delay=1):
                         raise
                     logger.warning(f"Attempt {attempt + 1} failed. Retrying in {delay} seconds...")
                     time.sleep(delay)
-
         return wrapper
-
     return decorator
