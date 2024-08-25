@@ -28,14 +28,10 @@ def log_test_step(step_description):
 def measure_page_load_time(driver):
     navigation_start = driver.execute_script("return performance.timing.navigationStart")
     load_event_end = driver.execute_script("return performance.timing.loadEventEnd")
-
-    # If loadEventEnd is 0, it means the page load hasn't completed yet
     if load_event_end == 0:
-        # Wait for a short time and try again
         time.sleep(1)
         load_event_end = driver.execute_script("return performance.timing.loadEventEnd")
-
-    load_time = (load_event_end - navigation_start) / 1000  # Convert to seconds
+    load_time = (load_event_end - navigation_start) / 1000
     logger.info(f"Page load time: {load_time:.2f} seconds")
     return load_time
 

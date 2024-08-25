@@ -18,7 +18,7 @@ class Config:
 
     # URLs
     BASE_URL = "https://www.python.org"
-    API_BASE_URL = os.getenv('API_BASE_URL', 'https://api.python.org')
+    API_BASE_URL = "https://jsonplaceholder.typicode.com"
 
     # Timeouts and waits
     IMPLICIT_WAIT = int(os.getenv('TEST_IMPLICIT_WAIT', '10'))
